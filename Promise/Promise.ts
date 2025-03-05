@@ -29,6 +29,22 @@ class _Promise<T> {
 		this.state = 'rejected';
 		this.rejectedReason = rejectedReason;
 	};
+
+	static resolve<T>(value: T): _Promise<T> {
+		if (value instanceof _Promise) {
+			return value;
+		}
+
+		return new _Promise<T>((resolve) => {
+			resolve(value);
+		});
+	}
+
+	static reject<T>(rejectedReason: any): _Promise<T> {
+		return new _Promise<T>((_, reject) => {
+			reject(rejectedReason);
+		});
+	}
 }
 
 export default _Promise;
